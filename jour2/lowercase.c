@@ -1,45 +1,45 @@
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 // fonction pour convertir une chaîne en minuscules
 char *to_lowercase(const char *str) {
-    int i = 0;
-    char *lower_str = malloc(sizeof(char) * (strlen(str) + 1));
+    if (!str) return NULL;
 
-    if (!lower_str)
-        return NULL;
+    int len = strlen(str);
+    char *lower_str = malloc(len + 1); // dans la fonction to_lowercase(), on alloue  dynamiquement la mémoire avec malloc() pour stocker la chaîne en minuscule 
 
-    while (str[i]) {
-        if (str[i] >= 'A' && str[i] <= 'Z')
-            lower_str[i] = str[i] + 32;  // convertir en minuscule
-        else
-            lower_str[i] = str[i];
-        i++;
+    if (!lower_str) return NULL;
+
+    for (int i = 0; i < len; i++) {
+        lower_str[i] = (str[i] >= 'A' && str[i] <= 'Z') ? str[i] + 32 : str[i];
     }
-    lower_str[i] = '\0';  // chaîne fini
+    lower_str[len] = '\0';
+
     return lower_str;
 }
 
-// fonction pour afficher une chaîne avec write()
+// fonction pour afficher une chaîne avec un retour à la ligne
 void my_putstr(const char *str) {
-    int len = 0;
-    while (str[len]) len++;  // calculer la longueur
-    write(1, str, len);
-    write(1, "\n", 1);
+    if (!str) return;
+    write(1, str, strlen(str));
+    write(1, "\n", 1);  // ajout du retour à la ligne
 }
 
 int main(int argc, char **argv) {
     if (argc < 2) {
-        write(1, "Usage: ./lowercase Hello World 123 ...\n", 39);
+        write(1, "usage: ./lowercase hello world 123 ...\n", 39);
         return 1;
     }
 
     for (int i = 1; i < argc; i++) {
         char *lower = to_lowercase(argv[i]);
-        if (lower) {
-            my_putstr(lower);
-            free(lower);
+        if (!lower) {
+            write(2, "erreur d'allocation mémoire\n", 28); // write() – affichage en sortie write() est une fonction de bas niveau qui fait partie de la bibliothèque unistd.h qui nous permets d'écrire des données brutes dans un fichier ou dans la console (stdout).
+            return 1;
         }
+        my_putstr(lower);  // affiche chaque mot avec un retour à la ligne
+        free(lower);
     }
 
     return 0;
