@@ -12,7 +12,19 @@
 
 //free libère la mémoire allouée
 
-//whrite affiche le texte bas niveau
+//whrite affiche le texte bas niveau.
+
+// arg = argument
+
+//&a = une adresse
+
+// x* a* b* = pointeur
+
+// la fonction atoi () convertit une chaîne de caractères en valeur entière
+// l'entrée chaîne est une séquence de caractères qui peut être interprétée comme une valeur numérique du type de retour spécifié
+// fonction atoi ; ascendant to integer récursif itérative
+
+
 
 // LES POINTEURS :
 
@@ -199,3 +211,83 @@ union Data {
 //pointeur vers une constante constante (ni l'adresse ni la valeur ne peuvent être modifiées).
 
 //en résumé, il existe de nombreux types de pointeurs en C, chacun ayant des applications spécifiques en fonction de ce que tu veux faire avec les données. La gestion des pointeurs en C est très puissante, mais elle nécessite de bien comprendre les concepts de mémoire pour éviter les erreurs et les fuites de mémoire.
+
+// Les caractères \t, \n, \r et \f sont des caractères d'échappement en C utilisés pour représenter des espaces blancs spéciaux :
+
+// \t (tabulation horizontale) : ajoute un espace de tabulation (généralement 4 ou 8 espaces selon l'éditeur).
+
+//\n (saut de ligne, nouvelle ligne ) : passe à la ligne suivante.
+    
+//\r (retour chariot, carriage return) : déplace le curseur au début de la ligne actuelle (utilisé principalement sous Windows en combinaison avec \n).
+    
+//\f (saut de page, form feed) : Indique un saut de page, souvent utilisé dans les imprimantes ou certains traitements de texte.
+    
+//Ils sont inclus dans my_atoi pour ignorer les espaces blancs en début de chaîne avant de commencer la conversion.
+
+// \0 fin de string
+
+// En C, un buffer est généralement un tableau (char, int, etc.) utilisé pour stocker des données en attente de traitement.
+
+// implémenter de la foncrtion itoa integer to ascendant
+#include <stdio.h>
+#include <stdlib.h>
+
+void my_itoa(int num, char *str, int base) {
+    int i = 0;
+    int isNegative = 0;
+
+    // Gérer le cas du zéro
+    if (num == 0) {
+        str[i++] = '0';
+        str[i] = '\0';
+        return;
+    }
+
+    // Gérer les nombres négatifs pour les bases 10
+    if (num < 0 && base == 10) {
+        isNegative = 1;
+        num = -num;
+    }
+
+    // Convertir le nombre en base spécifiée
+    while (num != 0) {
+        int rem = num % base;
+        str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+        num = num / base;
+    }
+
+    // Ajouter le signe négatif si nécessaire
+    if (isNegative)
+        str[i++] = '-';
+
+    str[i] = '\0';  // Terminer la chaîne
+
+    // Inverser la chaîne
+    int start = 0, end = i - 1;
+    while (start < end) {
+        char temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+// Test de la fonction
+int main() {
+    char buffer[20];
+
+    my_itoa(1234, buffer, 10);
+    printf("Décimal : %s\n", buffer);  // "1234"
+
+    my_itoa(-5678, buffer, 10);
+    printf("Décimal négatif : %s\n", buffer);  // "-5678"
+
+    my_itoa(255, buffer, 16);
+    printf("Hexadécimal : %s\n", buffer);  // "ff"
+
+    my_itoa(42, buffer, 2);
+    printf("Binaire : %s\n", buffer);  // "101010"
+
+    return 0;
+}
