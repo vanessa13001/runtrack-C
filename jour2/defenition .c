@@ -109,6 +109,73 @@ int *const p = &a;  // p est un pointeur constant, l'adresse de p ne peut pas ch
 const int a = 10;
 const int *const p = &a;  // p ne peut ni pointer vers autre chose ni modifier la valeur à l'adresse
 
+// pointeur nul (NULL) un pointeur nul est un pointeur qui ne pointe vers aucune adresse mémoire valide. Il est souvent utilisé pour indiquer qu'un pointeur n'a pas été initialisé ou qu'une allocation de mémoire a échoué
+
+//exemple de pointeur NULL : 
+int *p = NULL;  // p est un pointeur nul, il ne pointe vers aucune adresse valide
+
+// pointeur de type void (void*) le pointeur void* est un pointeur générique qui peut pointer vers n'importe quel type de données. Ce type de pointeur est souvent utilisé pour les fonctions qui manipulent des données de types variés
+
+// exemple de pointeur void : 
+void *ptr;
+int x = 10;
+ptr = &x;  // ptr peut pointer vers n'importe quel type de donnée
+
+// pointeur vers une matrice (pointeur vers un tableau à plusieurs dimensions) en C, un tableau à plusieurs dimensions est essentiellement un tableau de pointeurs, et il est possible de créer des pointeurs vers des tableaux multidimensionnels. Cela permet de manipuler des matrices et des tableaux de manière flexible
+
+// exemple de pointeur vers une matrice :
+int arr[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+int (*p)[3] = arr;  // p est un pointeur vers un tableau de 3 entiers
+
+// pointeur  constant vers un objet constant (pointeur "const const") ce type de pointeur a deux niveaux de constance : l'adresse qu'il contient ne peut pas être modifiée, et la valeur pointée ne peut pas être modifiée non plus. Il est souvent utilisé pour des constantes dans des fonctions ou pour garantir que les données ne seront pas modifiées
+
+// exemple de pointeur de constant vers un objet constant : 
+const int *const p = &a;  // p ne peut pas être modifié, et la valeur pointée non plus
+
+// pointeur  vers un type défini par l'utilisateur (struct) cela se produit lorsqu'on travaille avec des structures définies par l'utilisateur, et on utilise des pointeurs pour manipuler ces structures efficacement
+
+// exemple pointeur vers un type défini par utilisateur :
+struct Person {
+    char name[50];
+    int age;
+};
+
+struct Person *p;
+struct Person person1 = {"Alice", 25};
+p = &person1;  // p pointe vers une instance de la structure Person
+
+// pointeur vers union : les unions permettent de stocker différentes données dans un même emplacement mémoire, mais elles partagent la même adresse. Un pointeur peut être utilisé pour manipuler les données stockées dans une union
+
+// exemple pointeurs vers union : 
+#include <stdio.h>
+
+union Data {
+    int i;
+    float f;
+    char str[20];
+};
+
+int main() {
+    union Data data;
+    union Data *ptr = &data;
+
+    ptr->i = 10;  // utilise le pointeur pour accéder à la donnée de l'union
+    printf("Valeur de i : %d\n", ptr->i);
+
+    return 0;
+}
+
+
+union Data {
+    int i;
+    float f;
+    char str[20];
+};
+
+
+
+
+
 // RESUME DES POINTEURS 
 
 // Résumé des types de pointeurs :pointeur vers une variable (de type simple).
