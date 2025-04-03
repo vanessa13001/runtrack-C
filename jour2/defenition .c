@@ -291,3 +291,11 @@ int main() {
 
     return 0;
 }
+
+
+// Fonction	Objectif
+//malloc ()	Alloue la mémoire de la taille demandée et renvoie le pointeur sur le premier octet de
+//espace alloué.
+//calloc()	Alloue de l'espace pour les éléments d'un tableau. Initialise les éléments à zéro et renvoie un pointeur vers la mémoire.
+//réalloc()	Il permet de modifier la taille de l'espace mémoire précédemment alloué.
+//free()	Libère ou vide l'espace mémoire précédemment alloué
